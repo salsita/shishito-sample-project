@@ -1,4 +1,4 @@
-salsa-webqa-sample-project
-==========================
+# Salsa WebQA - sample project
 
-Sample project for Salsa WebQA library
+This is sample project using Salsa WebQA selenium webdriver python library.
+For more information how to use the library see its repository https://github.com/salsita/salsa-webqa.
