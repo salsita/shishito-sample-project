@@ -4,15 +4,15 @@
 @author: Vojtech Burian
 @summary: Contextual (slide-in) help feature test
 """
+import time
+
 from unittestzero import Assert
 import pytest
-from salsa_webqa.library.logic.auth.auth import log_in
-from conftest import get_test_info
 
+from tests.conftest import get_test_info
 from pages.google_search import GoogleSearch
 from library.google_lib import GoogleControl
 from pages.google_doodles import GoogleDoodles
-
 from salsa_webqa.library.support.selenium_support import TestSelenium
 
 
@@ -32,7 +32,7 @@ class TestMainPage():
         self.tc.stop_browser(self)
 
     def setup_method(self, method):
-        self.tc.start_test()
+        self.tc.start_test(True)
 
     def teardown_method(self, method):
         test_info = get_test_info()
@@ -43,13 +43,15 @@ class TestMainPage():
     def test_google_search(self):
         """ test google search """
         self.ts.click_and_wait(self.search_page.luck)
-        Assert.equal(self.doodles.header.text, 'Doodles')
+        self.ts.click_and_wait(self.doodles.doodle_archive)
+        Assert.equal(self.driver.title, 'Google Doodles')
 
     def test_failing(self):
         """ test google title """
-        log_in(self.search_page.search_field, 'email', self.search_page.search_field, 'password')
         Assert.equal(self.driver.title, 'Yahoo')
 
     def test_good_title(self):
         """ test google title """
-        Assert.not_equal(self.driver.title, 'Apple')
+        self.search_page.search_field.send_keys('Jaromir Jagr')
+        time.sleep(3)
+        Assert.equal(self.search_page.jagr_title.text, 'Jaromír Jágr'.decode('utf8'))

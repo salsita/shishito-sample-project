@@ -15,7 +15,12 @@ class GoogleDoodles(Page):
         self.driver = driver
 
         self._header = (By.TAG_NAME, 'h1')
+        self._doodle_archive_locator = (By.LINK_TEXT, 'Doodles Archive')
 
     @property
     def header(self):
         return self.driver.find_element(*self._header)
+
+    @property
+    def doodle_archive(self):
+        return self.driver.find_element(*self._doodle_archive_locator)

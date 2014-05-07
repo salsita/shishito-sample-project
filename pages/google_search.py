@@ -16,6 +16,7 @@ class GoogleSearch(Page):
         
         self._search_field_locator = (By.ID, 'gbqfq')
         self._luck_locator = (By.ID, 'gbqfbb')
+        self._jagr_title = (By.CLASS_NAME, 'kno-ecr-pt')
 
     @property 
     def search_field(self):
@@ -24,3 +25,7 @@ class GoogleSearch(Page):
     @property
     def luck(self):
         return self.driver.find_element(*self._luck_locator)
+
+    @property
+    def jagr_title(self):
+        return self.driver.find_element(*self._jagr_title)
