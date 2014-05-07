@@ -29,5 +29,5 @@ class GoogleControl(TestControl):
             self.call_local_browser(browser)
             self.driver.set_window_size(width, height)
 
-        self.test_init(url)
+        self.test_init(url, browser)
         return self.driver
