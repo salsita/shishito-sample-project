@@ -13,7 +13,7 @@ from tests.conftest import get_test_info
 from pages.google_search import GoogleSearch
 from library.google_lib import GoogleControl
 from pages.google_doodles import GoogleDoodles
-from salsa_webqa.library.support.selenium_support import TestSelenium
+from salsa_webqa.library.support.selenium_support import SeleniumTest
 
 
 @pytest.mark.usefixtures("test_status")
@@ -23,7 +23,7 @@ class TestMainPage():
         self.tc = GoogleControl()
         self.driver = self.tc.start_browser()
 
-        self.ts = TestSelenium(self.driver)
+        self.ts = SeleniumTest(self.driver)
 
         self.search_page = GoogleSearch(self.driver)
         self.doodles = GoogleDoodles(self.driver)

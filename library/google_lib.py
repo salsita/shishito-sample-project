@@ -4,13 +4,13 @@
 @author: Vojtech Burian
 @summary: Google project-specific function library
 """
-from salsa_webqa.library.test_control import TestControl
+from salsa_webqa.library.control_test import ControlTest
 
 
-class GoogleControl(TestControl):
+class GoogleControl(ControlTest):
 
     def __init__(self):
-        TestControl.__init__(self)
+        ControlTest.__init__(self)
 
     def do_some_google_specific_stuff(self):
         print 'this is some google project specific text!'
