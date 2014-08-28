@@ -26,7 +26,7 @@ class GoogleControl(ControlTest):
         if browser.lower() == "browserstack":
             self.call_browserstack_browser(build_name)
         else:
-            self.call_local_browser(browser)
+            self.call_local_browser(browser.lower())
             self.driver.set_window_size(width, height)
 
         self.test_init(url, browser)
