@@ -43,14 +43,21 @@ def pytest_addoption(parser):
                      help="Screen resolution: 1024x768, 1280x960, 1280x1024, 1600x1200, 1920x1080")
     parser.addoption("--xbuildname", action="store", default="Unnamed",
                      help="Test build name")
+    parser.addoption("--xbrowserName", action="store", default="iPad",
+                     help="BrowserStack mobile browser: iPad, iPhone, android")
+    parser.addoption("--xplatform", action="store", default="MAC",
+                     help="BrowserStack mobile platform: MAC, ANDROID")
+    parser.addoption("--xdevice", action="store", default="iPad Air",
+                     help="BrowserStack mobile device: iPad Air, Samsung Galaxy S5 and others")
+    parser.addoption("--xdeviceOrientation", action="store", default="portrait",
+                     help="BrowserStack mobile device screen orientation: portrait or landscape")
     group = parser.getgroup("terminal reporting")
     group.addoption('--html', '--junit-html', action="store",
-           dest="htmlpath", metavar="path", default=None,
-           help="create html style report file at given path.")
+                    dest="htmlpath", metavar="path", default=None,
+                    help="create html style report file at given path.")
     group.addoption('--htmlprefix', '--html-prefix', action="store",
-           dest="prefix", metavar="str", default=None,
-           help="prepend prefix to classnames in html output")
-
+                    dest="prefix", metavar="str", default=None,
+                    help="prepend prefix to classnames in html output")
 
 
 def pytest_configure(config):
@@ -124,3 +131,18 @@ def xresolution(request):
 @pytest.fixture
 def xbuildname(request):
     return request.config.getoption("--xbuildname")
+
+@pytest.fixture
+def xdevice(request):
+    return request.config.getoption("--xdevice")
+
+@pytest.fixture
+def xdeviceOrientation(request):
+    return request.config.getoption("--xdeviceOrientation")
+
+@pytest.fixture
+def xbrowserName(request):
+    return request.config.getoption("--xbrowserName")
+
+def xplatform(request):
+    return request.config.getoption("--xplatform")
