@@ -51,6 +51,10 @@ def pytest_addoption(parser):
                      help="BrowserStack mobile device: iPad Air, Samsung Galaxy S5 and others")
     parser.addoption("--xdeviceOrientation", action="store", default="portrait",
                      help="BrowserStack mobile device screen orientation: portrait or landscape")
+    parser.addoption("--jira_username", action="store", default="",
+                     help="Jira username")
+    parser.addoption("--jira_password", action="store", default="",
+                     help="Jira password")
     group = parser.getgroup("terminal reporting")
     group.addoption('--html', '--junit-html', action="store",
                     dest="htmlpath", metavar="path", default=None,
@@ -58,7 +62,6 @@ def pytest_addoption(parser):
     group.addoption('--htmlprefix', '--html-prefix', action="store",
                     dest="prefix", metavar="str", default=None,
                     help="prepend prefix to classnames in html output")
-
 
 def pytest_configure(config):
     htmlpath = config.option.htmlpath
@@ -146,3 +149,10 @@ def xbrowserName(request):
 
 def xplatform(request):
     return request.config.getoption("--xplatform")
+
+@pytest.fixture
+def jira_username(request):
+    return request.config.getoption("--jira_username")
+
+def jira_password(request):
+    return request.config.getoption("--jira_password")
