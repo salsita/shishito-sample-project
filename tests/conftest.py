@@ -51,10 +51,10 @@ def pytest_addoption(parser):
                      help="BrowserStack mobile device: iPad Air, Samsung Galaxy S5 and others")
     parser.addoption("--xdeviceOrientation", action="store", default="portrait",
                      help="BrowserStack mobile device screen orientation: portrait or landscape")
-    parser.addoption("--jira_username", action="store", default="",
-                     help="Jira username")
-    parser.addoption("--jira_password", action="store", default="",
-                     help="Jira password")
+    parser.addoption("--jira_support", action="store", default=None,
+                     help="Jira username and password")
+    parser.addoption("--browserstack", action="store", default=None,
+                     help="Browserstack username and password")
     group = parser.getgroup("terminal reporting")
     group.addoption('--html', '--junit-html', action="store",
                     dest="htmlpath", metavar="path", default=None,
@@ -151,8 +151,9 @@ def xplatform(request):
     return request.config.getoption("--xplatform")
 
 @pytest.fixture
-def jira_username(request):
-    return request.config.getoption("--jira_username")
+def jira_support(request):
+    return request.config.getoption("--jira_support")
 
-def jira_password(request):
-    return request.config.getoption("--jira_password")
+@pytest.fixture
+def jira_support(request):
+    return request.config.getoption("--browserstack")
