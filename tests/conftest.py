@@ -13,6 +13,7 @@ from salsa_webqa.library.report.junithtml import LogHTML
 
 class TestInfo():
     """ Gathers test execution information about currently running test """
+
     def __init__(self):
         self.test_status = None
         self.test_name = None
@@ -20,6 +21,7 @@ class TestInfo():
     def set_test_info(self, new_status=None, new_name=None):
         self.test_status = new_status
         self.test_name = new_name
+
 
 test_info = TestInfo()
 
@@ -53,8 +55,12 @@ def pytest_addoption(parser):
                      help="BrowserStack mobile device screen orientation: portrait or landscape")
     parser.addoption("--jira_support", action="store", default=None,
                      help="Jira username and password")
+    parser.addoption('--jira_cycle_id', action="store", default=None,
+                     help="Set JIRA cycle id")
     parser.addoption("--browserstack", action="store", default=None,
                      help="Browserstack username and password")
+    parser.addoption('--test_mobile', action="store", default=None,
+                     help="Execute tests on mobile devices")
     group = parser.getgroup("terminal reporting")
     group.addoption('--html', '--junit-html', action="store",
                     dest="htmlpath", metavar="path", default=None,
@@ -63,15 +69,15 @@ def pytest_addoption(parser):
                     dest="prefix", metavar="str", default=None,
                     help="prepend prefix to classnames in html output")
 
+
 def pytest_configure(config):
     htmlpath = config.option.htmlpath
-    #print(htmlpath)
     prefix = config.option.prefix
-    #print(prefix)
     # prevent opening xmllog on slave nodes (xdist)
     if htmlpath and not hasattr(config, 'slaveinput'):
         config._html = LogHTML(htmlpath, prefix)
         config.pluginmanager.register(config._html)
+
 
 def pytest_unconfigure(config):
     html = getattr(config, '_html', None)
@@ -89,9 +95,11 @@ def pytest_runtest_makereport(item, call, __multicall__):
     setattr(item, "rep_" + rep.when, rep)
     return rep
 
+
 @pytest.fixture()
 def test_status(request):
     test_name = request.node.nodeid.split('::')[-1]
+
     def fin():
         # request.node is an "item" because we use the default
         # "function" scope
@@ -102,6 +110,7 @@ def test_status(request):
             if request.node.rep_call.failed:
                 test_info.set_test_info('failed_execution', test_name)
                 print "executing test failed", request.node.nodeid
+
     request.addfinalizer(fin)
     test_info.set_test_info('passed', test_name)
 
@@ -135,25 +144,41 @@ def xresolution(request):
 def xbuildname(request):
     return request.config.getoption("--xbuildname")
 
+
 @pytest.fixture
 def xdevice(request):
     return request.config.getoption("--xdevice")
+
 
 @pytest.fixture
 def xdeviceOrientation(request):
     return request.config.getoption("--xdeviceOrientation")
 
+
 @pytest.fixture
 def xbrowserName(request):
     return request.config.getoption("--xbrowserName")
 
+
 def xplatform(request):
     return request.config.getoption("--xplatform")
+
 
 @pytest.fixture
 def jira_support(request):
     return request.config.getoption("--jira_support")
 
+
 @pytest.fixture
 def jira_support(request):
     return request.config.getoption("--browserstack")
+
+
+@pytest.fixture
+def jira_cycle_id(request):
+    return request.config.getoption("--jira_cycle_id")
+
+
+@pytest.fixture
+def test_mobile(request):
+    return request.config.getoption("--test_mobile")
