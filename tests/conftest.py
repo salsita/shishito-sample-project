@@ -36,7 +36,7 @@ def pytest_addoption(parser):
     parser.addoption("--url", action="store", default="https://salsitasoft.com", help="specify URL for test site")
     parser.addoption("--xbrowser", action="store", default="Chrome",
                      help="BrowserStack browser: Chrome, Firefox, IE, PhantomJS, Opera, Safari")
-    parser.addoption("--xbrowserversion", action="store", default="34.0",
+    parser.addoption("--xbrowserversion", action="store", default="38.0",
                      help="BrowserStack browser version. Value depends on selected browser.")
     parser.addoption("--xos", action="store", default="Windows",
                      help="BrowserStack operating system: Windows, OS X")
