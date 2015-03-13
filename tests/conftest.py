@@ -6,7 +6,7 @@
 """
 import pytest
 
-from salsa_webqa.library.report.junithtml import LogHTML
+from shishito.library.modules.reporting.junithtml import LogHTML
 
 
 # CURRENT TEST INFO OBJECT #
@@ -34,6 +34,16 @@ def get_test_info():
 
 def pytest_addoption(parser):
     parser.addoption("--url", action="store", default="https://salsitasoft.com", help="specify URL for test site")
+
+    # MODULES
+    parser.addoption('--test_platform=', action="store", default="web",
+                     help="Test Platform")
+    parser.addoption('--test_environment=', action="store", default="local",
+                     help="Test Environment")
+    parser.addoption('--environment_configuration=', action="store", default="local",
+                     help="Environment Configuration")
+
+    # BROWSERSTACK
     parser.addoption("--xbrowser", action="store", default="Chrome",
                      help="BrowserStack browser: Chrome, Firefox, IE, PhantomJS, Opera, Safari")
     parser.addoption("--xbrowserversion", action="store", default="38.0",
@@ -62,6 +72,24 @@ def pytest_addoption(parser):
                      help="Browserstack username and password")
     parser.addoption('--test_mobile', action="store", default=None,
                      help="Execute tests on mobile devices")
+
+    # APPIUM
+    parser.addoption('--platformName', action="store", default=None,
+                     help="Appium platform: ios, android")
+    parser.addoption('--platformVersion', action="store", default=None,
+                     help="Appium platform version. For iOS e.g. '7.1', for Android e.g. '4.4'")
+    parser.addoption('--deviceName', action="store", default=None,
+                     help="Device name (simulator or real device)")
+    parser.addoption('--appiumVersion', action="store", default=None,
+                     help="Appium verison, e.g. '1.3.5'")
+    parser.addoption('--appPackage', action="store", default=None,
+                     help="Android app package, e.g. 'com.example.android.notepad'")
+    parser.addoption('--appActivity', action="store", default=None,
+                     help="Android default activity, e.g. '.NotesList'")
+    parser.addoption('--app', action="store", default=None,
+                     help="File path or link to iOS app.zip file / Android apk file")
+
+    # REPORTS
     group = parser.getgroup("terminal reporting")
     group.addoption('--html', '--junit-html', action="store",
                     dest="htmlpath", metavar="path", default=None,
@@ -183,6 +211,7 @@ def jira_cycle_id(request):
 @pytest.fixture
 def test_mobile(request):
     return request.config.getoption("--test_mobile")
+
 
 @pytest.fixture(scope='class')
 def url(request):

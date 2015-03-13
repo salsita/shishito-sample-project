@@ -14,8 +14,8 @@ class GoogleSearch(Page):
         Page.__init__(self, driver)
         self.driver = driver
         
-        self._search_field_locator = (By.ID, 'gbqfq')
-        self._luck_locator = (By.ID, 'gbqfbb')
+        self._search_field_locator = (By.ID, 'lst-ib')
+        self._luck_locator = (By.NAME, 'btnI')
         self._jagr_title = (By.CLASS_NAME, 'kno-ecr-pt')
 
     @property 
