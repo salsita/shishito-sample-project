@@ -59,5 +59,6 @@ class TestMainPage():
         """ test google title """
         # self.execution_id = self.tc.get_execution_id("MET-13")
         self.search_page.search_field.send_keys('Jaromir Jagr')
+        self.ts.click_and_wait(self.search_page.search_button)
         time.sleep(3)
         Assert.equal(self.search_page.jagr_title.text, 'Jaromír Jágr'.decode('utf8'))
