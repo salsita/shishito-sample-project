@@ -3,7 +3,7 @@ import pytest
 import time
 from unittestzero import Assert
 
-from shishito.library.modules.runtime.shishito_support import ShishitoSupport
+from shishito.runtime.shishito_support import ShishitoSupport
 from tests.conftest import get_test_info
 
 

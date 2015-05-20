@@ -1,1 +1,1 @@
-from shishito.library.conf.conftest import *
+from shishito.conf.conftest import *

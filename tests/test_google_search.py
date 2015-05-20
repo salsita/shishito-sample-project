@@ -9,8 +9,8 @@ import time
 from unittestzero import Assert
 import pytest
 
-from shishito.library.modules.runtime.shishito_support import ShishitoSupport
-from shishito.library.modules.ui.selenium_support import SeleniumTest
+from shishito.runtime.shishito_support import ShishitoSupport
+from shishito.ui.selenium_support import SeleniumTest
 from tests.conftest import get_test_info
 from pages.google_search import GoogleSearch
 from pages.google_doodles import GoogleDoodles
