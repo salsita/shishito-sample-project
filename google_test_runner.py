@@ -1,6 +1,6 @@
 import os
 
-from shishito.salsa_runner import ShishitoRunner
+from shishito.shishito_runner import ShishitoRunner
 
 
 class GoogleRunner(ShishitoRunner):
