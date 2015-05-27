@@ -11,6 +11,9 @@ shishito_framework=~/shishito
 browserstack_user=
 browserstack_pass=
 
+saucelabs_user=
+saucelabs_pass=
+
 # Shishito to PYTHONPATH
 export PYTHONPATH=${PYTHONPATH}:/${shishito_framework}
 
@@ -18,32 +21,22 @@ export PYTHONPATH=${PYTHONPATH}:/${shishito_framework}
 #      TESTS
 # -----------------
 
-# COMBINATIONS UNSUPPORTED by Shishito
-# --mobile yes & --tests smoke
+# DEKSTOP COMBINATIONS - non selenium tests
+python ${shishito_test_project}/google_test_runner.py --platform generic --environment local --test_directory non_selenium_tests
+python ${shishito_test_project}/google_test_runner.py --platform generic --environment local --test_directory non_selenium_tests --smoke
 
-# INVALID COMBINATIONS (will not fail but do not make sense)
-# --env direct & --tests smoke
+# DESKTOP COMBINATIONS - local browser
+python ${shishito_test_project}/google_test_runner.py --platform web --environment local --test_directory tests
+python ${shishito_test_project}/google_test_runner.py --platform web --environment local --test_directory tests --smoke
 
-# DESKTOP COMBINATIONS
-export BROWSERSTACK='{"test_suite": [{"browser": "Firefox", "browser_version": "33.0","os": "Windows", "os_version": "7", "resolution": "1024x768"},{"browser": "Chrome", "browser_version": "38.0", "os": "Windows","os_version": "7", "resolution": "1024x768"}]}'
+# DESKTOP COMBINATIONS - browserstack
+python ${shishito_test_project}/google_test_runner.py --platform web --environment browserstack --browserstack ${browserstack_user}:${browserstack_pass} --test_directory tests
+python ${shishito_test_project}/google_test_runner.py --platform web --environment browserstack --browserstack ${browserstack_user}:${browserstack_pass} --test_directory tests --smoke
 
-python ${shishito_test_project}/google_test_runner.py --browserstack ${browserstack_user}:${browserstack_pass}
+# MOBILE APPS - local appium server
+python ${shishito_test_project}/google_test_runner.py --platform mobile --environment appium --test_directory appium_tests
+python ${shishito_test_project}/google_test_runner.py --platform mobile --environment appium --test_directory appium_tests --smoke
 
-python ${shishito_test_project}/google_test_runner.py --mobile yes --browserstack ${browserstack_user}:${browserstack_pass}
-
-python ${shishito_test_project}/google_test_runner.py --tests smoke --browserstack ${browserstack_user}:${browserstack_pass}
-
-# UNSUPPORTED
-#python ${shishito_test_project}/google_test_runner.py --mobile yes --tests smoke
-
-python ${shishito_test_project}/google_test_runner.py --env direct --browserstack ${browserstack_user}:${browserstack_pass}
-
-# INVALID
-#python ${shishito_test_project}/google_test_runner.py --env direct --tests smoke --browserstack ${browserstack_user}:${browserstack_pass}
-
-# MOBILE COMBINATIONS
-export BROWSERSTACK='{"test_suite": [{"browserName": "iPad", "platform": "MAC","device": "iPad Air", "deviceOrientation": "landscape"},{"browserName": "android", "platform": "ANDROID", "device": "Samsung Galaxy Tab 4 10.1","deviceOrientation": "landscape"}]}'
-python ${shishito_test_project}/google_test_runner.py --env direct --mobile yes --browserstack ${browserstack_user}:${browserstack_pass}
-
-# UNSUPPORTED
-# python ${shishito_test_project}/google_test_runner.py --env direct --mobile yes --tests smoke --browserstack ${browserstack_user}:${browserstack_pass}
+# MOBILE APPS - using saucelabs
+python ${shishito_test_project}/google_test_runner.py --platform mobile --environment appium --saucelabs ${saucelabs_user}:${saucelabs_pass} --test_directory appium_tests
+python ${shishito_test_project}/google_test_runner.py --platform mobile --environment appium --saucelabs ${saucelabs_user}:${saucelabs_pass} --test_directory appium_tests --smoke
