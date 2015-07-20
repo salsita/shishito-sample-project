@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Combined Test Results Report</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="combined_report.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+
+<button onclick="show_frame('Firefox')">Firefox</button>
+
+<button onclick="show_frame('Chrome')">Chrome</button>
+
+<br>
+
+
+<div id="Firefox" class="result_div">
+    <div class="result_frame_title">Firefox</div>
+    <iframe class="result_frame" frameborder="0" src="Firefox.html"></iframe>
+</div>
+
+<div id="Chrome" class="result_div">
+    <div class="result_frame_title">Chrome</div>
+    <iframe class="result_frame" frameborder="0" src="Chrome.html"></iframe>
+</div>
