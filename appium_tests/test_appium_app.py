@@ -4,7 +4,7 @@ import time
 from unittestzero import Assert
 
 from shishito.runtime.shishito_support import ShishitoSupport
-from tests.conftest import get_test_info
+from conftest import get_test_info
 
 
 @pytest.mark.usefixtures("test_status")
